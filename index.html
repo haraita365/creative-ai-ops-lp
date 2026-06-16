@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>クリエイティブAI運用代行 | SUTEKINA JIKAN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Spline+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#111E36;
+    --navy-deep:#0B1424;
+    --navy-soft:#1C2C49;
+    --gold:#C9A24B;
+    --gold-soft:#DCC183;
+    --cta:#E0A93B;
+    --cta-hover:#F0BB4D;
+    --ink:#141A2A;
+    --ink-mut:#626B7E;
+    --line:#E8EBF1;
+    --paper:#FFFFFF;
+    --paper-2:#F7F8FB;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Noto Sans JP",sans-serif;color:var(--ink);background:var(--paper);line-height:1.9;-webkit-font-smoothing:antialiased;font-feature-settings:"palt"}
+  .container{max-width:1040px;margin:0 auto;padding:0 32px}
+  .eyebrow{font-family:"Spline Sans",sans-serif;font-size:11px;font-weight:600;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:24px}
+  h2.title{font-size:38px;font-weight:900;line-height:1.45;letter-spacing:-.01em;margin-bottom:24px}
+  .lead{font-size:16px;color:var(--ink-mut);line-height:2.1;max-width:640px}
+  section{padding:120px 0}
+
+  .btn-cta{display:inline-flex;align-items:center;gap:11px;background:var(--cta);color:#1A1206;font-weight:700;font-size:16px;padding:18px 40px;border-radius:11px;text-decoration:none;letter-spacing:.02em;transition:transform .2s,box-shadow .2s,background .2s;box-shadow:0 14px 34px -12px rgba(224,169,59,.6)}
+  .btn-cta:hover{background:var(--cta-hover);transform:translateY(-2px);box-shadow:0 20px 40px -12px rgba(224,169,59,.7)}
+  .btn-cta .arw{font-family:"Spline Sans";transition:transform .2s}
+  .btn-cta:hover .arw{transform:translateX(4px)}
+  .btn-cta.lg{font-size:17px;padding:20px 46px}
+
+  /* Sticky offer header (replaces both campaign + header) */
+  .topbar{position:sticky;top:0;z-index:50;background:var(--navy-deep);color:#fff;border-bottom:1px solid rgba(255,255,255,.06)}
+  .topbar-in{max-width:1040px;margin:0 auto;padding:13px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .tb-left{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .tb-badge{font-family:"Spline Sans",sans-serif;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#1A1206;background:var(--gold);padding:5px 12px;border-radius:4px;font-weight:700;white-space:nowrap}
+  .tb-text{font-size:13.5px;letter-spacing:.02em;color:rgba(255,255,255,.92)}
+  .tb-text b{color:var(--gold-soft);font-weight:700}
+  .tb-cta{font-size:13px;font-weight:700;color:#1A1206;background:var(--cta);padding:9px 20px;border-radius:7px;text-decoration:none;letter-spacing:.03em;transition:background .2s,transform .2s;white-space:nowrap;flex-shrink:0}
+  .tb-cta:hover{background:var(--cta-hover);transform:translateY(-1px)}
+
+  /* Hero */
+  .hero{background:var(--paper);padding:100px 0 110px}
+  .hero-in{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+  .hero h1{font-size:42px;font-weight:900;line-height:1.4;letter-spacing:-.02em;margin:22px 0 26px}
+  .hero h1 .u{color:var(--navy)}
+  .hero-sub{font-size:16px;color:var(--ink-mut);line-height:2.05;margin-bottom:36px;font-weight:400}
+  .hero-sub b{color:var(--ink);font-weight:700}
+
+  /* AI loop visual */
+  .ai-loop{background:linear-gradient(160deg,var(--navy) 0%,var(--navy-deep) 100%);border-radius:22px;padding:48px 36px 40px;color:#fff;box-shadow:0 40px 80px -34px rgba(11,20,36,.55);position:relative;overflow:hidden}
+  .ai-loop::before{content:"";position:absolute;top:-40%;right:-30%;width:380px;height:380px;background:radial-gradient(circle,rgba(220,193,131,.13),transparent 65%);pointer-events:none}
+  .ai-tag{font-family:"Spline Sans";font-size:10.5px;letter-spacing:.24em;color:var(--gold-soft);text-transform:uppercase;text-align:center;margin-bottom:6px;position:relative}
+  .ai-headline{text-align:center;font-size:17px;font-weight:900;letter-spacing:.01em;margin-bottom:30px;position:relative}
+  .ai-vis{position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:22px}
+  .ai-vis svg{display:block;width:100%;max-width:340px;height:auto}
+  .ai-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;position:relative}
+  .ais{text-align:center}
+  .ais .ain{font-family:"Spline Sans";font-size:10.5px;font-weight:700;color:var(--gold);letter-spacing:.1em}
+  .ais .ait{font-size:12.5px;font-weight:700;margin-top:4px;color:#fff}
+  .ai-foot{margin-top:24px;padding-top:18px;border-top:1px solid rgba(220,193,131,.18);text-align:center;font-size:12.5px;color:var(--gold-soft);letter-spacing:.02em;position:relative}
+  .ai-foot b{color:#fff;font-weight:700}
+
+  /* Problem */
+  .problem{background:var(--paper-2)}
+  .p-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+  .p-item{padding:36px 28px;border-radius:16px;background:var(--paper);border:1px solid var(--line);transition:transform .2s,box-shadow .2s}
+  .p-item:hover{transform:translateY(-4px);box-shadow:0 24px 50px -28px rgba(17,30,54,.28)}
+  .p-num{font-family:"Spline Sans";font-size:32px;font-weight:700;color:#D7DCE6;line-height:1;margin-bottom:18px}
+  .p-item h3{font-size:19px;font-weight:900;line-height:1.55;margin-bottom:13px}
+  .p-item p{font-size:14px;color:var(--ink-mut);line-height:2}
+
+  /* Answer */
+  .answer-intro{background:var(--navy);color:#fff;padding:80px 0;text-align:center}
+  .answer-intro h2{font-size:36px;font-weight:900;line-height:1.55;letter-spacing:-.01em;color:#fff}
+  .answer-intro h2 .em{color:var(--gold-soft)}
+  .answer{background:var(--paper)}
+  .pr-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:58px}
+  .pr-step{padding:0 4px}
+  .pr-n{font-family:"Spline Sans";font-size:13px;font-weight:700;letter-spacing:.12em;color:var(--gold)}
+  .pr-rule{height:2px;background:var(--line);margin:14px 0 18px;position:relative}
+  .pr-rule::before{content:"";position:absolute;left:0;top:0;width:34px;height:2px;background:var(--gold)}
+  .pr-step h3{font-size:18px;font-weight:900;margin-bottom:12px;line-height:1.5}
+  .pr-step p{font-size:13.5px;color:var(--ink-mut);line-height:1.95}
+
+  /* Results & Logic (merged) */
+  .results{background:var(--paper-2)}
+  .res-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:54px;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:48px 32px;box-shadow:0 30px 70px -40px rgba(17,30,54,.24)}
+  .res-m{text-align:center}
+  .res-m .mv{font-family:"Spline Sans";font-size:48px;font-weight:700;color:var(--navy);line-height:1;letter-spacing:-.02em}
+  .res-m .mv small{font-size:22px;font-weight:600;color:var(--ink-mut)}
+  .res-m .ml{font-size:13px;color:var(--ink-mut);margin-top:14px;line-height:1.7}
+  .res-m+.res-m{border-left:1px solid var(--line)}
+  .res-note{margin-top:18px;font-size:11.5px;color:var(--ink-mut);text-align:center;line-height:1.8}
+
+  .logic-block{margin-top:80px}
+  .logic-eyebrow{font-family:"Spline Sans",sans-serif;font-size:11px;font-weight:600;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:20px}
+  .logic-title{font-size:30px;font-weight:900;line-height:1.5;margin-bottom:20px;letter-spacing:-.01em}
+  .logic-lead{font-size:15.5px;color:var(--ink-mut);line-height:2.05;max-width:640px;margin-bottom:46px}
+  .l-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .l-card{padding:34px 28px;background:var(--paper);border:1px solid var(--line);border-radius:16px}
+  .l-ic{width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--paper-2);border:1px solid var(--line);border-radius:11px;margin-bottom:18px}
+  .l-ic svg{width:22px;height:22px}
+  .l-ic svg path,.l-ic svg circle,.l-ic svg line,.l-ic svg polyline,.l-ic svg rect{stroke:var(--navy);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .l-card h3{font-size:17px;font-weight:900;line-height:1.55;margin-bottom:10px}
+  .l-card p{font-size:13.5px;color:var(--ink-mut);line-height:2}
+  .l-card .lvs{font-family:"Spline Sans";font-size:11px;color:var(--gold);font-weight:700;letter-spacing:.1em;margin-top:14px;display:block}
+
+  /* Why us */
+  .why{background:var(--paper)}
+  .cmp{margin-top:54px;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  thead th{background:var(--navy);color:#fff;font-weight:700;padding:18px 20px;text-align:left;font-size:14px}
+  thead th.hl{background:var(--navy-deep);position:relative}
+  thead th.hl::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--gold)}
+  tbody td{padding:16px 20px;border-bottom:1px solid var(--line);color:var(--ink-mut)}
+  tbody td:first-child{font-weight:900;color:var(--ink);background:var(--paper-2)}
+  tbody td.own{background:rgba(201,162,75,.07);color:var(--ink);font-weight:500}
+  tbody tr:last-child td{border-bottom:none}
+  .mk{color:var(--gold);font-weight:700}
+  .mk-no{color:#C2C8D3}
+
+  /* Offer */
+  .offer{background:var(--navy);color:#fff;text-align:center}
+  .offer .eyebrow{color:var(--gold-soft)}
+  .offer h2{font-size:36px;font-weight:900;color:#fff;margin-bottom:16px;letter-spacing:-.01em}
+  .offer .o-lead{color:rgba(255,255,255,.7);font-size:15.5px;max-width:540px;margin:0 auto 50px;line-height:2}
+  .price-card{max-width:560px;margin:0 auto;background:var(--navy-soft);border:1px solid rgba(220,193,131,.2);border-radius:22px;padding:44px 40px;text-align:left}
+  .badge{display:inline-block;font-family:"Spline Sans";font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#1A1206;background:var(--gold);padding:5px 14px;border-radius:5px;font-weight:700;margin-bottom:26px}
+  .price-row{display:flex;align-items:baseline;justify-content:space-between;padding:17px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+  .price-row:last-of-type{border-bottom:none}
+  .price-row .pl{font-size:14.5px;color:rgba(255,255,255,.85)}
+  .price-row .pv{font-family:"Spline Sans";font-size:22px;font-weight:700;color:#fff}
+  .price-row .pv.free{color:var(--gold-soft)}
+  .price-row .pv small{font-size:13px;color:rgba(255,255,255,.55);font-weight:500}
+  .price-foot{font-size:12.5px;color:rgba(255,255,255,.6);margin-top:22px;line-height:1.8}
+  .offer-cta{margin-top:44px}
+
+  /* Contact */
+  .contact{background:var(--paper);text-align:center;padding:120px 0}
+  .contact .eyebrow{margin-bottom:32px}
+  .contact p{color:var(--ink-mut);font-size:15.5px;margin-bottom:40px;line-height:2}
+  .contact .mail{margin-top:24px;font-size:14px;color:var(--ink-mut)}
+  .contact .mail a{color:var(--navy);font-weight:700;text-decoration:none}
+
+  footer{background:var(--navy-deep);color:rgba(255,255,255,.55);text-align:center;padding:38px 0;font-size:12.5px;letter-spacing:.03em}
+  footer .logo{font-family:"Spline Sans",sans-serif;font-weight:700;font-size:18px;letter-spacing:.04em;color:#fff;margin-bottom:8px}
+  footer .logo span{display:block;font-family:"Noto Sans JP";font-size:10.5px;font-weight:500;color:rgba(255,255,255,.5);letter-spacing:.16em;margin-top:2px}
+
+  a:focus-visible,button:focus-visible{outline:3px solid var(--cta);outline-offset:3px;border-radius:4px}
+
+  @media (max-width:880px){
+    section{padding:80px 0}
+    .hero{padding:60px 0 80px}
+    .hero-in{grid-template-columns:1fr;gap:48px}
+    .hero h1{font-size:26px;line-height:1.55}
+    h2.title,.answer-intro h2,.offer h2{font-size:26px}
+    .logic-title{font-size:22px}
+    .p-grid,.pr-grid,.l-grid,.res-metrics{grid-template-columns:1fr}
+    .res-metrics{padding:36px 24px;gap:30px}
+    .res-m+.res-m{border-left:none;border-top:1px solid var(--line);padding-top:30px}
+    .price-card{padding:32px 24px}
+    thead th,tbody td{padding:13px 13px;font-size:12.5px}
+    .ai-loop{padding:36px 24px 30px}
+    .topbar-in{padding:11px 18px;flex-wrap:wrap;gap:10px}
+    .tb-text{font-size:12.5px;flex:1;min-width:0}
+    .tb-cta{font-size:12.5px;padding:8px 16px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none !important;scroll-behavior:auto !important}}
+</style>
+</head>
+<body>
+
+<!-- Sticky topbar (Launch Offer + CTA) -->
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="tb-left">
+      <span class="tb-badge">Launch Offer</span>
+      <span class="tb-text">先着5社限定 ・ <b>初月無料</b>で始められる3ヶ月プラン</span>
+    </div>
+    <a href="https://forms.gle/uzpaWXcLfT3Z2MpQ6" target="_blank" rel="noopener" class="tb-cta">無料相談</a>
+  </div>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-in">
+      <div>
+        <div class="eyebrow">AI Creative Operations</div>
+        <h1>広告クリエイティブを、<br><span class="u">AIで作り、検証する。</span></h1>
+        <p class="hero-sub">
+          AIで広告バナーを継続的に生み出し、データで勝ちパターンを見極め、社内資産として蓄積。<b>制作・検証・蓄積を一つの仕組み</b>として運用代行します。
+        </p>
+        <a href="https://forms.gle/uzpaWXcLfT3Z2MpQ6" target="_blank" rel="noopener" class="btn-cta lg">無料相談を申し込む <span class="arw">→</span></a>
+      </div>
+      <!-- AI loop visual -->
+      <div class="ai-loop">
+        <div class="ai-tag">Powered by AI</div>
+        <div class="ai-headline">人ではなくAIが、回す。</div>
+        <div class="ai-vis">
+          <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="gld" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#DCC183"/>
+                <stop offset="1" stop-color="#C9A24B"/>
+              </linearGradient>
+            </defs>
+            <g stroke="#DCC183" stroke-width="1.5" stroke-linecap="round" opacity="0.3">
+              <line x1="14" y1="55" x2="78" y2="55"/>
+              <line x1="4" y1="100" x2="92" y2="100"/>
+              <line x1="14" y1="145" x2="78" y2="145"/>
+            </g>
+            <g stroke="#DCC183" stroke-width="1.5" stroke-linecap="round" opacity="0.6">
+              <line x1="44" y1="55" x2="98" y2="55"/>
+              <line x1="34" y1="100" x2="108" y2="100"/>
+              <line x1="44" y1="145" x2="98" y2="145"/>
+            </g>
+            <g transform="translate(170,100)">
+              <circle r="64" fill="none" stroke="rgba(220,193,131,0.12)" stroke-width="1" stroke-dasharray="2 5"/>
+              <circle r="50" fill="rgba(220,193,131,0.05)" stroke="url(#gld)" stroke-width="2.5"/>
+              <circle r="50" fill="none" stroke="#E0A93B" stroke-width="2.5" stroke-dasharray="110 200" stroke-linecap="round" transform="rotate(-50)"/>
+              <text y="9" text-anchor="middle" fill="#fff" font-family="Spline Sans, sans-serif" font-size="26" font-weight="700" letter-spacing="3">AI</text>
+              <circle cx="0" cy="-50" r="5" fill="#E0A93B"/>
+              <circle cx="35.4" cy="35.4" r="5" fill="#E0A93B"/>
+              <circle cx="-35.4" cy="35.4" r="4" fill="#E0A93B" opacity="0.75"/>
+              <circle cx="50" cy="0" r="3.5" fill="#E0A93B" opacity="0.55"/>
+            </g>
+            <g stroke="#DCC183" stroke-width="1.5" stroke-linecap="round" opacity="0.6">
+              <line x1="242" y1="55" x2="296" y2="55"/>
+              <line x1="232" y1="100" x2="306" y2="100"/>
+              <line x1="242" y1="145" x2="296" y2="145"/>
+            </g>
+            <g stroke="#DCC183" stroke-width="1.5" stroke-linecap="round" opacity="0.3">
+              <line x1="262" y1="55" x2="326" y2="55"/>
+              <line x1="248" y1="100" x2="336" y2="100"/>
+              <line x1="262" y1="145" x2="326" y2="145"/>
+            </g>
+          </svg>
+        </div>
+        <div class="ai-steps">
+          <div class="ais"><div class="ain">01</div><div class="ait">設計</div></div>
+          <div class="ais"><div class="ain">02</div><div class="ait">制作</div></div>
+          <div class="ais"><div class="ain">03</div><div class="ait">検証</div></div>
+          <div class="ais"><div class="ain">04</div><div class="ait">蓄積</div></div>
+        </div>
+        <div class="ai-foot"><b>人の手では追いつかないスピード</b>で、勝ちパターンを回す。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Problem -->
+<section class="problem">
+  <div class="container">
+    <div class="eyebrow">Problem</div>
+    <h2 class="title">こんな悩み、<br>ありませんか?</h2>
+    <p class="lead">予算もある。配信もできている。それでも成果が伸び悩むのは、多くの場合「クリエイティブの回し方」に原因があります。</p>
+    <div class="p-grid">
+      <div class="p-item"><div class="p-num">01</div><h3>クリエイティブが、<br>すぐ枯れる</h3><p>同じ訴求はすぐ慣れられる。新しい切り口の供給が追いつかず、当たっていた広告のCVも、気づけば落ちていく。</p></div>
+      <div class="p-item"><div class="p-num">02</div><h3>何が効いたのか、<br>分からない</h3><p>コピーなのか、画像なのか、訴求なのか。変数が混ざった検証では、本当の勝因が特定できない。</p></div>
+      <div class="p-item"><div class="p-num">03</div><h3>勝ちパターンが、<br>貯まらない</h3><p>ノウハウが担当者の頭の中にしか残らない。人が変われば、また一から当てずっぽうに戻ってしまう。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Answer intro -->
+<section class="answer-intro">
+  <div class="container">
+    <h2>「作る・検証する・貯める」を、<br><span class="em">ひとつの仕組みに。</span></h2>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="answer">
+  <div class="container">
+    <div class="eyebrow">How It Works</div>
+    <h2 class="title">勝ちパターンを回す、<br>4つのステップ。</h2>
+    <p class="lead">当てずっぽうの制作はしません。設計から蓄積までを一周させ、続けるほど精度が上がる状態をつくります。</p>
+    <div class="pr-grid">
+      <div class="pr-step"><div class="pr-n">STEP 01</div><div class="pr-rule"></div><h3>勝ちパターンを設計</h3><p>これまでの実績から「刺さる型」を導き出し、訴求を設計。まず仮説を立ててから制作に入ります。</p></div>
+      <div class="pr-step"><div class="pr-n">STEP 02</div><div class="pr-rule"></div><h3>AIで継続的に制作</h3><p>専用のAIでビジュアルを継続的に生み出す。コピーは差し替え可能にし、検証の変数を綺麗に保ちます。</p></div>
+      <div class="pr-step"><div class="pr-n">STEP 03</div><div class="pr-rule"></div><h3>データで検証</h3><p>配信データから勝敗を見極め、効かない訴求は早く見切り、予算を勝ちパターンへ寄せていきます。</p></div>
+      <div class="pr-step"><div class="pr-n">STEP 04</div><div class="pr-rule"></div><h3>資産に蓄積</h3><p>勝ち負けの学びをデータベース化。次の提案がデータに基づき、再現性が積み上がります。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Results & Logic (merged) -->
+<section class="results">
+  <div class="container">
+    <div class="eyebrow">Results</div>
+    <h2 class="title">過去実績</h2>
+    <p class="lead">あるD2Cブランドでの運用事例。勝ちパターンを特定し、効かない訴求を見切ることで、限られた予算を成果に集中させました。</p>
+    <div class="res-metrics">
+      <div class="res-m"><div class="mv">-80<small>%超</small></div><div class="ml">CPA改善<br>（最良ケース）</div></div>
+      <div class="res-m"><div class="mv">×3<small>倍</small></div><div class="ml">CTVR改善<br>（最良ケース）</div></div>
+      <div class="res-m"><div class="mv">30-50<small>本/月</small></div><div class="ml">継続的に生み出す<br>クリエイティブ本数</div></div>
+    </div>
+    <p class="res-note">※ 守秘のため数値は丸め、内容を一般化して記載しています。最良ケースの実績であり、成果を保証するものではありません。</p>
+
+    <div class="logic-block">
+      <div class="logic-eyebrow">Why It Works</div>
+      <h3 class="logic-title">この成果を支える、3つの仕組み。</h3>
+      <p class="logic-lead">AIを軸に運用設計を組み直すことで、従来の外注モデルでは構造的に難しかった「速さ・継続性・蓄積」が同時に成立します。</p>
+      <div class="l-grid">
+        <div class="l-card">
+          <div class="l-ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><polyline points="14 7 21 7 21 14"/></svg></div>
+          <h3>制作コストが、増えない。</h3>
+          <p>従来の外注は「作るほど費用が増える」構造。AIを主軸にすることで、本数を増やしても制作費が比例して膨らみません。月額固定で継続的に回ります。</p>
+          <span class="lvs">→ 本数が増えても、コストは固定</span>
+        </div>
+        <div class="l-card">
+          <div class="l-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg></div>
+          <h3>制作スピードが、桁違いに速い。</h3>
+          <p>1本のバナーが分単位で生まれます。デザイナー1人の手作業が1日数本だとすれば、AI運用なら1日数十本。検証サイクルそのものが加速します。</p>
+          <span class="lvs">→ 検証回数が増える＝勝ちに早く辿り着く</span>
+        </div>
+        <div class="l-card">
+          <div class="l-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="9" y1="10" x2="9" y2="20"/></svg></div>
+          <h3>知見が、社内資産として残る。</h3>
+          <p>制作と検証の結果を構造化データとして蓄積。担当者の頭ではなく仕組みに残るため、人が変わってもナレッジが消えません。続けるほど精度が上がります。</p>
+          <span class="lvs">→ 使うほど、提案精度が積み上がる</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why us -->
+<section class="why">
+  <div class="container">
+    <div class="eyebrow">Why Us</div>
+    <h2 class="title">制作会社・広告代理店との、<br>立ち位置の違い。</h2>
+    <p class="lead">作って終わりでも、媒体運用するだけでもありません。設計から検証、蓄積までを一貫して回す「運用代行」です。</p>
+    <div class="cmp">
+      <table>
+        <thead><tr><th></th><th>制作会社</th><th>Web広告代理店</th><th class="hl">クリエイティブAI運用代行</th></tr></thead>
+        <tbody>
+          <tr><td>主な役割</td><td>クリエイティブを制作・納品</td><td>媒体運用・配信最適化</td><td class="own">設計から運用まで代行</td></tr>
+          <tr><td>継続的な制作</td><td><span class="mk">○</span> 作るほど費用増</td><td><span class="mk">△</span> 外注に依存</td><td class="own"><span class="mk">○</span> AIで月額固定</td></tr>
+          <tr><td>勝敗の検証</td><td><span class="mk-no">×</span></td><td><span class="mk">○</span> 媒体側の指標で</td><td class="own"><span class="mk">○</span> データで判定</td></tr>
+          <tr><td>ノウハウの蓄積</td><td><span class="mk-no">×</span></td><td><span class="mk-no">×</span> 案件単位で消える</td><td class="own"><span class="mk">○</span> データベース化</td></tr>
+          <tr><td>続けるほどの再現性</td><td><span class="mk-no">×</span></td><td><span class="mk">△</span></td><td class="own"><span class="mk">○</span> 使うほど精度UP</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="offer" id="offer">
+  <div class="container">
+    <div class="eyebrow">Pricing</div>
+    <h2>料金プラン</h2>
+    <p class="o-lead">先着5社限定。初月無料で始められる3ヶ月プランです。<br>成果に応じて、4ヶ月目以降の継続をご判断いただけます。</p>
+    <div class="price-card">
+      <span class="badge">先着5社限定</span>
+      <div class="price-row"><span class="pl">初月（オンボーディング＋初回配信）</span><span class="pv free">無料</span></div>
+      <div class="price-row"><span class="pl">2・3ヶ月目（成果実証期間）</span><span class="pv">¥20万<small>/月</small></span></div>
+      <div class="price-row"><span class="pl">4ヶ月目以降（標準運用）</span><span class="pv">¥20万<small>/月</small></span></div>
+      <div class="price-foot">3ヶ月契約。成果に応じて、戦略レビューや上位プランへの拡張もご相談いただけます。</div>
+    </div>
+    <div class="offer-cta"><a href="https://forms.gle/uzpaWXcLfT3Z2MpQ6" target="_blank" rel="noopener" class="btn-cta lg">無料相談を申し込む <span class="arw">→</span></a></div>
+  </div>
+</section>
+
+<!-- Contact (minimal) -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="eyebrow">Contact</div>
+    <p>現状の課題と、勝ちパターンの可能性を一緒に整理します。<br>無料相談は30分から。オンラインで完結します。</p>
+    <a href="https://forms.gle/uzpaWXcLfT3Z2MpQ6" target="_blank" rel="noopener" class="btn-cta lg">無料相談を申し込む <span class="arw">→</span></a>
+    <div class="mail">または <a href="mailto:info@sutekina-jikan.com">info@sutekina-jikan.com</a> までご連絡ください</div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="logo">SUTEKINA JIKAN<span>合同会社SUTEKINA JIKAN</span></div>
+    <div>&copy; 2026 SUTEKINA JIKAN, LLC. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
